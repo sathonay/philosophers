@@ -37,5 +37,5 @@ unsigned long	ft_atoul(const char *str)
 		str++;
 	while (ft_isdigit(*str))
 		val = val * 10 + *(str++) - '0';
-	return (sign * val);
+	return (val);
 }

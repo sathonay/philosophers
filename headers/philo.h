@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/06/30 23:54:42 by alrey            ###   ########.fr       */
+/*   Updated: 2025/06/30 23:59:17 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ enum	e_phil_state
 
 typedef struct	s_phil
 {
-	pthread_t thread,
+	pthread_t thread;
 }				t_phil;
 
 typedef struct	s_philo
