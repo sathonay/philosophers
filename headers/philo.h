@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/06/30 23:59:17 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/02 19:06:11 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 # include <sys/time.h>
 # include "libft.h"
 
+//# define ULONG __u_long
+//# define UINT __u_int
+
+typedef char			t_byte;
+typedef short			t_short;
+typedef int				t_int;
+typedef long			t_long;
+
+typedef unsigned char	t_ubyte;
+typedef unsigned short	t_ushort;
+typedef unsigned int	t_uint;
+typedef unsigned long	t_ulong;
+
 enum	e_phil_state
 {
 	DEAD,
@@ -30,22 +43,27 @@ enum	e_phil_state
 
 typedef struct	s_phil
 {
-	pthread_t thread;
+	t_ulong		id;
+	pthread_t	thread;
+	
 }				t_phil;
 
 typedef struct	s_philo
 {
+	unsigned long	start;
 	unsigned long	n_philosophers;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	unsigned long	number_of_times_each_philosopher_must_eat;
-	enum e_phil_state *philos;
-	unsigned long	*forks;
-	
+	unsigned long	**forks;
+	t_phil			**philos;	
 }				t_philo;
 
-long			get_current_time_ms();
+int				init_philos(t_philo *philo);
+
+// maybe an enum with NS MS S
+long			get_time_ms();
 
 long			ft_atol(const char *str);
 

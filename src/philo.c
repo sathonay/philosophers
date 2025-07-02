@@ -25,9 +25,8 @@ int main(int argc, char **argv, char **env)
 		philo.number_of_times_each_philosopher_must_eat = 0;
 	(void) philo;
 	(void) env;
-	philo.forks = ft_calloc(sizeof(unsigned long), philo.n_philosophers);
-	philo.forks = ft_calloc(sizeof(unsigned long), philo.n_philosophers);
-	printf("%ld\n", get_current_time_ms());
-	free(philo.forks);
+
+	init_philos(&philo);
+	printf("started at: %ld\n", philo.start);
 }
 

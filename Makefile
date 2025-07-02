@@ -2,6 +2,9 @@ SRC_FOLDER	= src/
 SRC=	\
 	philo.c \
 	atol.c \
+	time.c \
+	init.c \
+	print.c \
 
 OBJ_FOLDER=objects/
 OBJ		=$(addprefix $(OBJ_FOLDER), $(SRC:.c=.o))
@@ -13,7 +16,7 @@ FLAGS=-Wall -Wextra -Werror
 LIBFT_DIR=Libft/
 LIBFT_LIB=$(LIBFT_DIR)libft.a
 
-HEADERS= headers/#$(SRC_FOLDER) $(LIBFT_DIR)
+HEADERS= headers/ Libft/#$(SRC_FOLDER) $(LIBFT_DIR)
 INCLUDES=$(addprefix -I , $(HEADERS))
 
 LIBS=$(LIBFT_LIB) $(PRINTF_LIB) -lreadline
