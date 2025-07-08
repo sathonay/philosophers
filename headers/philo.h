@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/02 19:06:11 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/07 04:42:37 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,30 @@ typedef unsigned short	t_ushort;
 typedef unsigned int	t_uint;
 typedef unsigned long	t_ulong;
 
-enum	e_phil_state
-{
-	DEAD,
-	FORK,
-	EATING,
-	SLEEPING,
-	THINGKING
-};
 
-typedef struct	s_phil
+typedef struct	s_sim
 {
-	t_ulong		id;
-	pthread_t	thread;
-	
-}				t_phil;
-
-typedef struct	s_philo
-{
-	unsigned long	start;
+	bool			running;
 	unsigned long	n_philosophers;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
-	unsigned long	number_of_times_each_philosopher_must_eat;
-	unsigned long	**forks;
-	t_phil			**philos;	
+	unsigned long	must_eat;
+	pthread_mutex_t	print;
+}				t_sim;
+
+typedef struct	s_philo
+{
+	t_ulong			id;
+	t_ulong			last_meal;
+	pthread_mutex_t	fork;
+	pthread_mutex_t	*rfork;
+	pthread_t		thread;
+	t_sim			*sim;
 }				t_philo;
 
-int				init_philos(t_philo *philo);
+t_philo *init_philos(t_philo *philo);
 
-// maybe an enum with NS MS S
 long			get_time_ms();
 
 long			ft_atol(const char *str);

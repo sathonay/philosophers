@@ -10,23 +10,29 @@ long get_current_time_ms()
 	return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
 {
-	t_philo philo;
+	t_sim sim;
+	t_philo philos;
+
 	if (argc < 5)
 		return (printf("not enough arguments"), 1);
-	philo.n_philosophers = ft_atoul(argv[1]);
-	philo.time_to_die = ft_atoul(argv[2]);
-	philo.time_to_eat = ft_atoul(argv[3]);
-	philo.time_to_sleep = ft_atoul(argv[4]);
+	sim.running = true;
+	pthread_mutex_init(&sim.print, NULL);
+	sim.n_philosophers = ft_atoul(argv[1]);
+	sim.time_to_die = ft_atoul(argv[2]);
+	sim.time_to_eat = ft_atoul(argv[3]);
+	sim.time_to_sleep = ft_atoul(argv[4]);
 	if (argc > 5)
-		philo.number_of_times_each_philosopher_must_eat = ft_atoul(argv[5]);
+		sim.must_eat = ft_atoul(argv[5]);
 	else
-		philo.number_of_times_each_philosopher_must_eat = 0;
-	(void) philo;
-	(void) env;
-
-	init_philos(&philo);
-	printf("started at: %ld\n", philo.start);
+		sim.must_eat = -1;
+	philos = init_philos(sim);
+	while(simi.running)
+	{
+		
+	}
+	pthread_mutex_unlock(&sim.print);
+	pthread_mutex_destroy(&sim.print);
 }
 
