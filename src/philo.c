@@ -9,6 +9,17 @@ long get_current_time_ms()
 	printf("%ld\n", tv.tv_usec);
 	return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
+static void free_philos(t_sim *sim, t_philo *philos)
+{
+	t_ulong i;
+
+	i = 0;
+	while (i < sim->n_philosophers)
+	{
+		pthread_join(philos[i]->thread, NULL);
+	}
+	free(philos);
+}
 
 int main(int argc, char **argv)
 {
@@ -28,11 +39,12 @@ int main(int argc, char **argv)
 	else
 		sim.must_eat = -1;
 	philos = init_philos(sim);
-	while(simi.running)
+	while(sim.running)
 	{
-		
+		printf("ticking\n");
 	}
 	pthread_mutex_unlock(&sim.print);
 	pthread_mutex_destroy(&sim.print);
+	free_philos(philos);
 }
 
