@@ -6,13 +6,14 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/07 04:42:37 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/08 03:56:17 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 # include <stdio.h>
+# include <stdbool.h>
 # include <string.h>
 # include <unistd.h>
 # include <pthread.h>
@@ -54,7 +55,9 @@ typedef struct	s_philo
 	t_sim			*sim;
 }				t_philo;
 
-t_philo *init_philos(t_philo *philo);
+void			 print(t_philo *philo, char *msg);
+
+t_philo			*init_philos(t_sim *sim);
 
 long			get_time_ms();
 

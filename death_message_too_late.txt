@@ -1,0 +1,22 @@
+1 ticking
+1751952266011 1 has taken a fork
+1751952266011 1 is eating
+2 ticking
+1751952266011 2 has taken a fork
+1751952266011 2 is eating
+3 ticking
+1751952266011 3 has taken a fork
+1751952266011 3 is eating
+4 ticking
+1751952266012 4 has taken a fork
+1751952266012 4 is eating
+5 ticking
+1751952266012 5 has taken a fork
+1751952266012 5 is eating
+1751952266021 3 is sleeping
+1751952266021 1 is sleeping
+1751952266021 2 is sleeping
+1751952266022 4 is sleeping
+1751952266022 5 is sleeping
+1751952266121 2 died
+1751952266121 1 died

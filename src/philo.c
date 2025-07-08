@@ -16,7 +16,8 @@ static void free_philos(t_sim *sim, t_philo *philos)
 	i = 0;
 	while (i < sim->n_philosophers)
 	{
-		pthread_join(philos[i]->thread, NULL);
+		pthread_join(philos[i].thread, NULL);
+		i++;
 	}
 	free(philos);
 }
@@ -24,7 +25,7 @@ static void free_philos(t_sim *sim, t_philo *philos)
 int main(int argc, char **argv)
 {
 	t_sim sim;
-	t_philo philos;
+	t_philo *philos;
 
 	if (argc < 5)
 		return (printf("not enough arguments"), 1);
@@ -38,13 +39,11 @@ int main(int argc, char **argv)
 		sim.must_eat = ft_atoul(argv[5]);
 	else
 		sim.must_eat = -1;
-	philos = init_philos(sim);
-	while(sim.running)
-	{
-		printf("ticking\n");
-	}
+//	printf("n: %ld, ttd: %ld, tte: %ld, tts, %ld", sim.n_philosophers, sim.time_to_die, sim.time_to_eat, sim.time_to_sleep);
+//	return (0);
+	philos = init_philos(&sim);
+	free_philos(&sim, philos);
 	pthread_mutex_unlock(&sim.print);
 	pthread_mutex_destroy(&sim.print);
-	free_philos(philos);
 }
 
