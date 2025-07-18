@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:55:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/08 20:30:17 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 12:17:16 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ void *philosopher_life_schrodinger_cat(t_philo *philo)
 {
 	while (philo->sim->running)
 	{
-		printf("%ld ticking\n", philo->id);
 		pthread_mutex_lock(&philo->fork);
-		pthread_mutex_lock(philo->rfork);	
+		pthread_mutex_lock(philo->rfork);
 		philosopher_death(philo);
 		print(philo, "has taken a fork");
 		philo->last_meal = get_time_ms();
 		print(philo, "is eating");
-		schrodinger_sleep(philo, philo->sim->time_to_eat * 1000);
-		philosopher_death(philo);
-		print(philo, "is sleeping");
+		schrodinger_sleep(philo, philo->sim->time_to_eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(philo->rfork);	
-		schrodinger_sleep(philo, philo->sim->time_to_sleep * 1000);
+		if (++philo->meal_count >= philo->sim->max_meal)
+			return (NULL);
+		philosopher_death(philo);
+		print(philo, "is sleeping");
+		schrodinger_sleep(philo, philo->sim->time_to_sleep);
 		philosopher_death(philo);
 		print(philo, "is thinking");
 	}
@@ -74,9 +75,9 @@ static void distribute_forks(t_sim *sim, t_philo *philos)
 	{
 		philos[i].sim = sim;
 		if (i == sim->n_philosophers - 1)
-			philos[i].rfork = &philos[0].fork;
+			philos[i].rfork = &(philos[0].fork);
 		else
-			philos[i].rfork = &philos[i + 1].fork;
+			philos[i].rfork = &(philos[i + 1].fork);
 		pthread_create(&philos[i].thread, NULL,
 						(void *)&philosopher_life_schrodinger_cat, &philos[i]);
 		i++;	
