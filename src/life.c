@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 17:16:41 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 17:21:12 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static bool	philosopher_murder_attempt(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->sim->print);
 		philo->sim->running = false;
-		printf("%ld %lu %s\n", get_time_ms() - philo->sim->start, philo->id, "died");
+		printf("%ld %lu %s\n",
+			get_time_ms() - philo->sim->start, philo->id, "died");
 		pthread_mutex_unlock(&philo->sim->print);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(philo->rfork);
