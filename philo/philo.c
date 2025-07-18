@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:29:18 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 20:09:31 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/19 01:05:40 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	free_philos(t_sim *sim, t_philo *philos)
 		i++;
 	}
 	free(philos);
-	pthread_mutex_destroy(&sim->print);
 }
 
 static int	is_str_ulong(char *str)

@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/19 00:58:44 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/19 01:29:10 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	mssleep(t_sim *sim, t_ulong tts)
 
 	time = get_time_ms();
 	while (mutexc_get(&sim->running) && get_time_ms() - time < tts)
-		usleep(100);
+		usleep(10);
 }
 
 void	*philosopher_life(t_philo *philo)
@@ -44,8 +44,8 @@ void	*philosopher_life(t_philo *philo)
 		print(philo, "is eating");
 		mutexc_set(&philo->last_meal, (void *) get_time_ms());
 		mssleep(philo->sim, philo->sim->time_to_eat);
-		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(philo->rfork);
+		pthread_mutex_unlock(&philo->fork);
 		if ((t_ulong) mutexc_perform(&philo->meal_count, &increment)
 			>= philo->sim->max_meal)
 			return (NULL);
