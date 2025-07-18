@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:55:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 15:44:47 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 17:00:23 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_philo	*init_philos(t_sim *sim)
 	t_ulong	i;
 	t_philo	*philos;
 
+	sim->start = get_time_ms();
 	philos = ft_calloc(sim->n_philosophers, sizeof(t_philo));
 	if (philos != NULL)
 	{
@@ -42,7 +43,7 @@ t_philo	*init_philos(t_sim *sim)
 		while (i < sim->n_philosophers)
 		{
 			philos[i].id = i + 1;
-			philos[i].last_meal = get_time_ms();
+			philos[i].last_meal = sim->start;
 			pthread_mutex_init(&philos[i].fork, NULL);
 			philos[i].sim = sim;
 			i++;

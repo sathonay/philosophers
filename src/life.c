@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 16:53:34 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 17:16:41 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static bool	check_death(t_philo *philo)
 		|| &philo->fork == philo->rfork);
 }
 
-static void	mssleep(t_ulong tts)
+static void	mssleep(t_sim *sim, t_ulong tts)
 {
 	t_ulong	time;
 
 	time = get_time_ms();
-	while (get_time_ms() - time < tts)
+	while (sim->running && get_time_ms() - time < tts)
 		usleep(100);
 }
 
 void	*philosopher_life(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		mssleep(philo->sim->time_to_eat);
+		mssleep(philo->sim, philo->sim->time_to_eat);
 	while (philo->sim->running
 		&& philo->meal_count < philo->sim->max_meal)
 	{
@@ -42,13 +42,13 @@ void	*philosopher_life(t_philo *philo)
 		print(philo, "has taken a fork");
 		print(philo, "is eating");
 		philo->last_meal = get_time_ms();
-		mssleep(philo->sim->time_to_eat);
+		mssleep(philo->sim, philo->sim->time_to_eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(philo->rfork);
 		if (++philo->meal_count >= philo->sim->max_meal)
 			return (NULL);
 		print(philo, "is sleeping");
-		mssleep(philo->sim->time_to_sleep);
+		mssleep(philo->sim, philo->sim->time_to_sleep);
 		print(philo, "is thinking");
 	}
 	return (NULL);
@@ -60,7 +60,7 @@ static bool	philosopher_murder_attempt(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->sim->print);
 		philo->sim->running = false;
-		printf("%ld %lu %s\n", get_time_ms(), philo->id, "died");
+		printf("%ld %lu %s\n", get_time_ms() - philo->sim->start, philo->id, "died");
 		pthread_mutex_unlock(&philo->sim->print);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(philo->rfork);
