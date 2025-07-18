@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 16:14:34 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 17:17:54 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_sim
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	unsigned long	max_meal;
+	t_ulong			start;
 	pthread_mutex_t	print;
 }				t_sim;
 
