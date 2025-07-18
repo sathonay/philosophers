@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 16:33:03 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 16:49:50 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ static bool	check_death(t_philo *philo)
 
 static void	mssleep(t_ulong tts)
 {
-	usleep(1000 * tts);
+	t_ulong time;
+
+	time = get_time_ms();
+	while (get_time_ms() - time < tts)
+		usleep(100);
 }
 
 void	*philosopher_life(t_philo *philo)
