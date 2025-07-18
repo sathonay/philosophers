@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:29:18 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 13:31:02 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 15:45:39 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int	main(int argc, char **argv)
 	else
 		sim.max_meal = -1;
 	philos = init_philos(&sim);
+	if (philos == NULL)
+		return (1);
+	jack_the_ripper(&sim, philos);
 	free_philos(&sim, philos);
 	pthread_mutex_unlock(&sim.print);
 	pthread_mutex_destroy(&sim.print);

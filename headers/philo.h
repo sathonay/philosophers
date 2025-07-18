@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 13:22:29 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 15:53:41 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void			print(t_philo *philo, char *msg);
 
 t_philo			*init_philos(t_sim *sim);
 
-void			*philosopher_life_schrodinger(t_philo *philo);
+void			*philosopher_life(t_philo *philo);
+
+void			jack_the_ripper(t_sim *sim, t_philo *philos);
 
 long			get_time_ms(void);
 

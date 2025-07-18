@@ -1,6 +1,6 @@
 SRC_FOLDER	= src/
 SRC=	\
-	schrodinger.c \
+	life.c \
 	philo.c \
 	atol.c \
 	time.c \
@@ -38,7 +38,7 @@ WHITE	= \x1b[1;37m
 
 BORDER_C = $(PURPLE)
 
-OVERLAP = 0
+OVERLAP = 3
 
 CAT_C = $(PURPLE)
 CATE_C = $(RED)
@@ -55,12 +55,12 @@ endef
 $(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.c
 	$(call box, $(YELLOW), $<, 0)
 	@mkdir -p $(OBJ_FOLDER)
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 	$(call box, $(GREEN), $<, $(OVERLAP))
 
 $(NAME): $(LIBS) $(OBJ) | cat
 	$(call box, $(YELLOW), BUILDING EXECUTABLE..., 0)
-	$(CC) $(OBJ) $(LIBS) -o $@
+	@$(CC) $(OBJ) $(LIBS) -o $@
 	$(call box, $(GREEN), BUILDING EXECUTABLE, $(OVERLAP))
 
 
@@ -88,7 +88,6 @@ re: cat clean all
 clean: cat 
 	$(call box, $(RED), CLEANING, 0)
 	@rm -fr $(OBJ_FOLDER)
-	@rm -fr $(TARGET)
 	@make --silent -C $(LIBFT_DIR) clean
 	$(call box, $(GREEN), CLEANING, $(OVERLAP))
 

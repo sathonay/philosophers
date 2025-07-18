@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:55:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 13:29:11 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 15:44:47 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	distribute_forks(t_sim *sim, t_philo *philos)
 		else
 			philos[i].rfork = &(philos[i + 1].fork);
 		pthread_create(&philos[i].thread, NULL,
-			(void *)&philosopher_life_schrodinger, &philos[i]);
+			(void *)&philosopher_life, &philos[i]);
 		i++;
 	}
 }
