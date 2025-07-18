@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 20:12:51 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/19 00:58:44 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,24 @@ void	*philosopher_life(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		mssleep(philo->sim, philo->sim->time_to_eat);
-	while (mutexc_get(&philo->sim->running)
+	while (mutexc_get(&philo->sim->running) && &philo->fork != philo->rfork
 		&& (t_ulong) mutexc_get(&philo->meal_count) < philo->sim->max_meal)
 	{
-		if (&philo->fork != philo->rfork)
-		{
-			pthread_mutex_lock(&philo->fork);
-			print(philo, "has taken a fork");
-			pthread_mutex_lock(philo->rfork);
-			print(philo, "has taken a fork");
-			print(philo, "is eating");
-			mutexc_set(&philo->last_meal, (void *) get_time_ms());
-			mssleep(philo->sim, philo->sim->time_to_eat);
-			pthread_mutex_unlock(&philo->fork);
-			pthread_mutex_unlock(philo->rfork);
-			if ((t_ulong) mutexc_perform(&philo->meal_count, &increment)
-				>= philo->sim->max_meal)
-				return (NULL);
-			print(philo, "is sleeping");
-			mssleep(philo->sim, philo->sim->time_to_sleep);
-			print(philo, "is thinking");
-		}
-		
+		pthread_mutex_lock(&philo->fork);
+		print(philo, "has taken a fork");
+		pthread_mutex_lock(philo->rfork);
+		print(philo, "has taken a fork");
+		print(philo, "is eating");
+		mutexc_set(&philo->last_meal, (void *) get_time_ms());
+		mssleep(philo->sim, philo->sim->time_to_eat);
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(philo->rfork);
+		if ((t_ulong) mutexc_perform(&philo->meal_count, &increment)
+			>= philo->sim->max_meal)
+			return (NULL);
+		print(philo, "is sleeping");
+		mssleep(philo->sim, philo->sim->time_to_sleep);
+		print(philo, "is thinking");
 	}
 	return (NULL);
 }
