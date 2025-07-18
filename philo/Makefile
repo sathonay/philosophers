@@ -46,7 +46,7 @@ define box
 	@tput cnorm	
 endef
 
-$(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.c
+$(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.c | cat
 	$(call box, $(YELLOW), $<, 0)
 	@mkdir -p $(OBJ_FOLDER)
 	@$(CC) $(FLAGS) -c $< -o $@
@@ -77,7 +77,6 @@ cat:
 all: $(NAME)
 
 re: cat clean all
-	@make --silent -C $(LIBFT_DIR) re
 
 clean: cat 
 	$(call box, $(RED), CLEANING, 0)
