@@ -6,15 +6,16 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:02:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/02 19:05:55 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:17:28 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long get_time_ms()
+long	get_time_ms(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+	return ((tv.tv_sec) * 1000 + (tv.tv_usec) / 1000);
 }

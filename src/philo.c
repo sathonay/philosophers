@@ -1,17 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/18 13:29:18 by alrey             #+#    #+#             */
+/*   Updated: 2025/07/18 13:31:02 by alrey            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 #include "libft.h"
 
-
-long get_current_time_ms()
+static void	free_philos(t_sim *sim, t_philo *philos)
 {
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	printf("%ld\n", tv.tv_usec);
-	return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
-}
-static void free_philos(t_sim *sim, t_philo *philos)
-{
-	t_ulong i;
+	t_ulong	i;
 
 	i = 0;
 	while (i < sim->n_philosophers)
@@ -22,13 +26,50 @@ static void free_philos(t_sim *sim, t_philo *philos)
 	free(philos);
 }
 
-int main(int argc, char **argv)
+static int	ft_strcmp(char *s1, char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
+static int	is_str_ulong(char *str)
+{
+	char	c;
+	int		i;
+
+	c = '+';
+	i = 0;
+	while (*str && *str == '0')
+		str++;
+	while (ft_isdigit(str[i]) && i <= 20)
+		i++;
+	return (str[i] == '\0'
+		&& (i < 20 || ft_strcmp(str, "18446744073709551615") <= 0));
+}
+
+static bool	check_input(int argc, char **argv)
+{
+	if (argc < 5)
+		return (false);
+	if (!(is_str_ulong(argv[1]) && is_str_ulong(argv[2])
+			&& is_str_ulong(argv[3]) && is_str_ulong(argv[4])))
+		return (false);
+	if (argc > 5 && !is_str_ulong(argv[5]))
+		return (false);
+	return (true);
+}
+
+int	main(int argc, char **argv)
 {
 	t_sim	sim;
 	t_philo	*philos;
 
-	if (argc < 5)
-		return (printf("not enough arguments: \
+	if (!check_input(argc, argv))
+		return (printf("not enough arguments/invalid (only positive numbers): \
 [n_philo] [tt_die] [tt_eat] [tt_sleep] (max_meal)"), 1);
 	sim.running = true;
 	pthread_mutex_init(&sim.print, NULL);
@@ -45,4 +86,3 @@ int main(int argc, char **argv)
 	pthread_mutex_unlock(&sim.print);
 	pthread_mutex_destroy(&sim.print);
 }
-

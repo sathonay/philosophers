@@ -6,13 +6,13 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:37:15 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/08 05:04:03 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:31:15 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void print(t_philo *philo, char *msg)
+void	print(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->sim->print);
 	if (philo->sim->running)

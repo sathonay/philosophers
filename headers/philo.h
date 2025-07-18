@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/08 03:56:17 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:22:29 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,35 @@ typedef unsigned short	t_ushort;
 typedef unsigned int	t_uint;
 typedef unsigned long	t_ulong;
 
-
-typedef struct	s_sim
+typedef struct s_sim
 {
 	bool			running;
 	unsigned long	n_philosophers;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
-	unsigned long	must_eat;
+	unsigned long	max_meal;
 	pthread_mutex_t	print;
 }				t_sim;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	t_ulong			id;
 	t_ulong			last_meal;
+	t_ulong			meal_count;
 	pthread_mutex_t	fork;
 	pthread_mutex_t	*rfork;
 	pthread_t		thread;
 	t_sim			*sim;
 }				t_philo;
 
-void			 print(t_philo *philo, char *msg);
+void			print(t_philo *philo, char *msg);
 
 t_philo			*init_philos(t_sim *sim);
 
-long			get_time_ms();
+void			*philosopher_life_schrodinger(t_philo *philo);
+
+long			get_time_ms(void);
 
 long			ft_atol(const char *str);
 

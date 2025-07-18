@@ -1,0 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   schrodinger.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
+/*   Updated: 2025/07/18 13:31:19 by alrey            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+static bool	check_death(t_philo *philo)
+{
+	t_ulong	time;
+
+	time = get_time_ms();
+	return (time - philo->last_meal > philo->sim->time_to_die
+		|| &philo->fork == philo->rfork);
+}
+
+static bool	philosopher_murder_attempt(t_philo *philo)
+{
+	if (check_death(philo))
+	{
+		print(philo, "died");
+		philo->sim->running = false;
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(philo->rfork);
+		return (true);
+	}
+	return (false);
+}
+
+static void	schrodinger_sleep(t_philo *philo, t_ulong tts)
+{
+	t_ulong	time;
+
+	time = get_time_ms();
+	while (philo->sim->running && !check_death(philo)
+		&& get_time_ms() - time <= tts)
+	{
+		usleep(10);
+	}
+}
+
+void	*philosopher_life_schrodinger(t_philo *philo)
+{
+	while (philo->sim->running)
+	{
+		if (philosopher_murder_attempt(philo))
+			return (NULL);
+		pthread_mutex_lock(&philo->fork);
+		pthread_mutex_lock(philo->rfork);
+		philosopher_murder_attempt(philo);
+		print(philo, "has taken a fork");
+		philo->last_meal = get_time_ms();
+		print(philo, "is eating");
+		schrodinger_sleep(philo, philo->sim->time_to_eat);
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(philo->rfork);
+		if (++philo->meal_count >= philo->sim->max_meal)
+			return (NULL);
+		philosopher_murder_attempt(philo);
+		print(philo, "is sleeping");
+		schrodinger_sleep(philo, philo->sim->time_to_sleep);
+		philosopher_murder_attempt(philo);
+		print(philo, "is thinking");
+	}
+	return (NULL);
+}

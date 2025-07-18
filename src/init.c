@@ -6,71 +6,17 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:55:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 12:17:16 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:29:11 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool check_death(t_philo *philo)
-{
-	t_ulong time;
-	
-	time = get_time_ms();
-	return (time - philo->last_meal > philo->sim->time_to_die);
-}
-
-static void philosopher_death(t_philo *philo)
-{
-		if (check_death(philo))
-		{
-			print(philo, "died");
-			philo->sim->running = false;
-		}
-		pthread_mutex_unlock(&philo->fork);
-		pthread_mutex_unlock(philo->rfork);	
-}
-
-void schrodinger_sleep(t_philo *philo, t_ulong tts)
-{
-	t_ulong	time;
-
-	time = get_time_ms();
-	while (philo->sim->running && !check_death(philo) && get_time_ms() - time <= tts)
-	{
-		usleep(10);
-	}
-}
-
-void *philosopher_life_schrodinger_cat(t_philo *philo)
-{
-	while (philo->sim->running)
-	{
-		pthread_mutex_lock(&philo->fork);
-		pthread_mutex_lock(philo->rfork);
-		philosopher_death(philo);
-		print(philo, "has taken a fork");
-		philo->last_meal = get_time_ms();
-		print(philo, "is eating");
-		schrodinger_sleep(philo, philo->sim->time_to_eat);
-		pthread_mutex_unlock(&philo->fork);
-		pthread_mutex_unlock(philo->rfork);	
-		if (++philo->meal_count >= philo->sim->max_meal)
-			return (NULL);
-		philosopher_death(philo);
-		print(philo, "is sleeping");
-		schrodinger_sleep(philo, philo->sim->time_to_sleep);
-		philosopher_death(philo);
-		print(philo, "is thinking");
-	}
-	return (NULL);
-}
-
-static void distribute_forks(t_sim *sim, t_philo *philos)
+static void	distribute_forks(t_sim *sim, t_philo *philos)
 {
 	t_ulong	i;
 
-	i = 0;	
+	i = 0;
 	while (i < sim->n_philosophers)
 	{
 		philos[i].sim = sim;
@@ -79,8 +25,8 @@ static void distribute_forks(t_sim *sim, t_philo *philos)
 		else
 			philos[i].rfork = &(philos[i + 1].fork);
 		pthread_create(&philos[i].thread, NULL,
-						(void *)&philosopher_life_schrodinger_cat, &philos[i]);
-		i++;	
+			(void *)&philosopher_life_schrodinger, &philos[i]);
+		i++;
 	}
 }
 
@@ -92,14 +38,14 @@ t_philo	*init_philos(t_sim *sim)
 	philos = ft_calloc(sim->n_philosophers, sizeof(t_philo));
 	if (philos != NULL)
 	{
-		i = 0;	
+		i = 0;
 		while (i < sim->n_philosophers)
 		{
 			philos[i].id = i + 1;
 			philos[i].last_meal = get_time_ms();
 			pthread_mutex_init(&philos[i].fork, NULL);
 			philos[i].sim = sim;
-			i++;	
+			i++;
 		}
 		distribute_forks(sim, philos);
 	}
