@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 16:49:50 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/18 16:53:34 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	check_death(t_philo *philo)
 
 static void	mssleep(t_ulong tts)
 {
-	t_ulong time;
+	t_ulong	time;
 
 	time = get_time_ms();
 	while (get_time_ms() - time < tts)
@@ -81,7 +81,8 @@ void	jack_the_ripper(t_sim *sim, t_philo *philos)
 		i = 0;
 		while (i < sim->n_philosophers)
 		{
-			if (philos[i].meal_count < sim->max_meal || sim->max_meal == (t_ulong) -1)
+			if (philos[i].meal_count < sim->max_meal
+				|| sim->max_meal == (t_ulong) - 1)
 				all_ate = false;
 			if (philosopher_murder_attempt(&philos[i]))
 				return ;
