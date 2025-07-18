@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:55:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/08 05:18:50 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/08 20:30:17 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ static void philosopher_death(t_philo *philo)
 		pthread_mutex_unlock(philo->rfork);	
 }
 
+void schrodinger_sleep(t_philo *philo, t_ulong tts)
+{
+	t_ulong	time;
+
+	time = get_time_ms();
+	while (philo->sim->running && !check_death(philo) && get_time_ms() - time <= tts)
+	{
+		usleep(10);
+	}
+}
+
 void *philosopher_life_schrodinger_cat(t_philo *philo)
 {
 	while (philo->sim->running)
@@ -42,14 +53,12 @@ void *philosopher_life_schrodinger_cat(t_philo *philo)
 		print(philo, "has taken a fork");
 		philo->last_meal = get_time_ms();
 		print(philo, "is eating");
-		if (philo->sim->running)
-			usleep(philo->sim->time_to_eat * 1000);
+		schrodinger_sleep(philo, philo->sim->time_to_eat * 1000);
 		philosopher_death(philo);
 		print(philo, "is sleeping");
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(philo->rfork);	
-		if (philo->sim->running)
-			usleep(philo->sim->time_to_sleep * 1000);
+		schrodinger_sleep(philo, philo->sim->time_to_sleep * 1000);
 		philosopher_death(philo);
 		print(philo, "is thinking");
 	}
