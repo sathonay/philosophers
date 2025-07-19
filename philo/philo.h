@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/18 19:58:49 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/19 20:45:40 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_philo			*init_philos(t_sim *sim);
 
 void			*philosopher_life(t_philo *philo);
 
-void			jack_the_ripper(t_sim *sim, t_philo *philos);
+int				jack_the_ripper(t_sim *sim, t_philo *philos);
 
 long			get_time_ms(void);
 
@@ -82,4 +82,5 @@ int				ft_isdigit(int c);
 
 void			*increment(void *value);
 
+void			mssleep(t_sim *sim, t_ulong tts);
 #endif 
