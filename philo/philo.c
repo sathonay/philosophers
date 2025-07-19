@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:29:18 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/19 01:05:40 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/19 18:18:42 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static bool	check_input(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
+	int		ext_code;
 	t_sim	sim;
 	t_philo	*philos;
 
@@ -72,7 +73,8 @@ int	main(int argc, char **argv)
 	philos = init_philos(&sim);
 	if (philos == NULL)
 		return (1);
-	jack_the_ripper(&sim, philos);
+	ext_code = jack_the_ripper(&sim, philos);
 	free_philos(&sim, philos);
 	pthread_mutex_destroy(&sim.print);
+	return (ext_code);
 }

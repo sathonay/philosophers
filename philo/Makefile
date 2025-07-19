@@ -14,7 +14,7 @@ OBJ		=$(addprefix $(OBJ_FOLDER), $(SRC:.c=.o))
 
 
 CC = cc
-FLAGS=-Wall -Wextra -Werror #-g -fsanitize=thread
+FLAGS=-Wall -Wextra -Werror # -g -fsanitize=thread #-fno-sanitize=thread
 
 NAME = philo
 

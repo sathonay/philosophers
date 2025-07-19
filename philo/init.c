@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:55:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/19 01:32:45 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/19 19:03:48 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ static void	distribute_forks(t_sim *sim, t_philo *philos)
 	while (i < sim->n_philosophers)
 	{
 		philos[i].sim = sim;
-		if (i == sim->n_philosophers - 1)
-			philos[i].rfork = &(philos[0].fork);
-		else
-			philos[i].rfork = &(philos[i + 1].fork);
+		philos[i].rfork = &(philos[i + 1 % sim->n_philosophers].fork);
 		mutexc_set(&philos[i].last_meal, (void *)sim->start);
 		pthread_create(&philos[i].thread, NULL,
 			(void *)&philosopher_life, &philos[i]);
