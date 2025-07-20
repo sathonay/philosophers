@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:53:50 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/19 20:45:40 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/20 15:47:13 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ typedef struct s_mutexc
 typedef struct s_sim
 {
 	t_mutexc		running;
-	unsigned long	n_philosophers;
-	unsigned long	time_to_die;
-	unsigned long	time_to_eat;
-	unsigned long	time_to_sleep;
-	unsigned long	max_meal;
+	t_ulong	n_philosophers;
+	t_ulong	time_to_die;
+	t_ulong	time_to_eat;
+	t_ulong	time_to_sleep;
+	t_ulong	max_meal;
 	t_ulong			start;
 	pthread_mutex_t	print;
 }				t_sim;
@@ -83,4 +83,8 @@ int				ft_isdigit(int c);
 void			*increment(void *value);
 
 void			mssleep(t_sim *sim, t_ulong tts);
+
+t_ulong			ulmax(t_ulong a, t_ulong b);
+
+t_ulong			ulmin(t_ulong a, t_ulong b);
 #endif 
