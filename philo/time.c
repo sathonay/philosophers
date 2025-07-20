@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:02:56 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/20 15:46:47 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/20 15:53:46 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	mssleep(t_sim *sim, t_ulong tts)
 {
 	t_ulong	time;
 
-	if (tts <= 0)
+	if (tts == 0)
 		return ;
 	time = get_time_ms();
 	while (mutexc_get(&sim->running) && get_time_ms() - time < tts)
