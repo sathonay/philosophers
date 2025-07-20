@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:29:18 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/20 15:45:56 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/20 20:53:29 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,14 @@ static void	free_philos(t_sim *sim, t_philo *philos)
 	while (i < sim->n_philosophers)
 	{
 		pthread_join(philos[i].thread, NULL);
-		pthread_mutex_destroy(&philos[i].fork);
+		i++;
+	}
+	i = 0;
+	while (i < sim->n_philosophers)
+	{
+		pthread_mutex_lock(&(philos[i].fork));
+		pthread_mutex_unlock(&(philos[i].fork));
+		pthread_mutex_destroy(&(philos[i].fork));
 		i++;
 	}
 	free(philos);

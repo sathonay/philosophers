@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:21:35 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/20 15:46:37 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/20 20:52:50 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ void	*philosopher_life(t_philo *philo)
 	print(philo, "is thinking");
 	if (philo->id % 2 == 0)
 		mssleep(philo->sim, philo->sim->time_to_eat);
-	while (mutexc_get(&philo->sim->running) && &philo->fork != philo->rfork
-		&& (t_ulong) mutexc_get(&philo->meal_count) < philo->sim->max_meal)
+	while (mutexc_get(&philo->sim->running) && &philo->fork != philo->rfork)
 	{
 		eat(philo);
 		print(philo, "is sleeping");
