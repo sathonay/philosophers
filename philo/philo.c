@@ -6,7 +6,7 @@
 /*   By: alrey <alrey@student.42nice.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:29:18 by alrey             #+#    #+#             */
-/*   Updated: 2025/07/20 20:53:29 by alrey            ###   ########.fr       */
+/*   Updated: 2025/07/20 23:42:50 by alrey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ static int	is_str_ulong(char *str)
 
 static bool	check_input(int argc, char **argv)
 {
-	if (argc < 5)
+	if (argc < 5 || argc > 6)
 		return (false);
 	if (!(is_str_ulong(argv[1]) && is_str_ulong(argv[2])
 			&& is_str_ulong(argv[3]) && is_str_ulong(argv[4])))
 		return (false);
-	if (argc > 5 && !is_str_ulong(argv[5]))
+	if (argc == 6 && !is_str_ulong(argv[5]))
 		return (false);
 	return (true);
 }
